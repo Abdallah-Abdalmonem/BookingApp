@@ -1,0 +1,79 @@
+import 'package:booking_app/constants/app_strings.dart';
+import 'package:booking_app/constants/constants.dart';
+import 'package:booking_app/features/department/views/screens/department_screen.dart';
+import 'package:flutter/material.dart';
+
+import '../../../employee/views/screens/employee_screen.dart';
+
+class MyCustomGridView extends StatelessWidget {
+  List<Color> colorsList;
+  List<Icon> myIconsList;
+  List<String> titleList;
+  // void Function()? onTap;
+  MyCustomGridView({
+    required this.colorsList,
+    required this.myIconsList,
+    required this.titleList,
+    // required this.onTap
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: AppSrings.titleDepartmentList.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              if (index == 6) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EmployeeScreen(),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DepartmentScreen(
+                      department: AppSrings.departmentList[index],
+                      departmentTitle: AppSrings.titleDepartmentList[index],
+                    ),
+                  ),
+                );
+              }
+            },
+            child: Card(
+              child: Container(
+                // alignment: Alignment.center,
+                color: colorsList[index],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    myIconsList[index],
+                    Text(
+                      titleList[index],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
