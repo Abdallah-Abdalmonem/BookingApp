@@ -1,15 +1,14 @@
 import 'package:booking_app/presentation/whole_calendar_page/app_imports.dart';
 import 'package:intl/intl.dart';
 
-/// Pop up dialog for event creation.
-class CreateEventDialog extends StatefulWidget {
-  const CreateEventDialog({super.key});
+class CreateEventBottomSheet extends StatefulWidget {
+  const CreateEventBottomSheet({super.key});
 
   @override
-  _CreateEventDialogState createState() => _CreateEventDialogState();
+  _CreateEventBottomSheetState createState() => _CreateEventBottomSheetState();
 }
 
-class _CreateEventDialogState extends State<CreateEventDialog> {
+class _CreateEventBottomSheetState extends State<CreateEventBottomSheet> {
   int _selectedColorIndex = 0;
   final _eventNameController = TextEditingController();
 
@@ -26,141 +25,204 @@ class _CreateEventDialogState extends State<CreateEventDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Dialog(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: size.height * 0.7,
-          maxWidth: size.width * 0.8,
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                /// Dialog title.
-                const Text(
-                  'Event creating',
-                  style: TextStyle(
-                    color: violet,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
+    return Padding(
+      padding: MediaQuery.of(context)
+          .viewInsets
+          .add(const EdgeInsets.symmetric(horizontal: 16, vertical: 24)),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            /// Dialog title.
+            const Text(
+              'Event creating',
+              style: TextStyle(
+                color: violet,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
 
-                /// Event name input field.
-                TextField(
-                  cursorColor: violet,
-                  style: const TextStyle(color: violet, fontSize: 16),
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: violet.withOpacity(1)),
-                    ),
-                    hintText: 'Enter the event name',
-                    hintStyle:
-                        TextStyle(color: violet.withOpacity(0.6), fontSize: 16),
-                  ),
-                  controller: _eventNameController,
+            /// Event name input field.
+            TextField(
+              cursorColor: violet,
+              style: const TextStyle(color: violet, fontSize: 16),
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: violet.withOpacity(1)),
                 ),
-                const SizedBox(height: 24),
-
-                /// Color selection section.
-                const Text(
-                  'Select event color',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: violet,
-                    fontWeight: FontWeight.w500,
-                  ),
+                hintText: 'Enter the name of renter',
+                hintStyle:
+                    TextStyle(color: violet.withOpacity(0.6), fontSize: 16),
+              ),
+              controller: _eventNameController,
+            ),
+            TextField(
+              cursorColor: violet,
+              style: const TextStyle(color: violet, fontSize: 16),
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: violet.withOpacity(1)),
                 ),
-                const SizedBox(height: 14),
+                hintText: 'Enter the id',
+                hintStyle:
+                    TextStyle(color: violet.withOpacity(0.6), fontSize: 16),
+              ),
+              controller: _eventNameController,
+            ),
+            TextField(
+              cursorColor: violet,
+              style: const TextStyle(color: violet, fontSize: 16),
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: violet.withOpacity(1)),
+                ),
+                hintText: 'Enter the phone number',
+                hintStyle:
+                    TextStyle(color: violet.withOpacity(0.6), fontSize: 16),
+              ),
+              controller: _eventNameController,
+            ),
+            // Container(
+            //   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(12),
+            //     border: Border.all(color: Colors.blue, width: 2),
+            //   ),
+            //   child: DropdownButtonHideUnderline(
+            //     child: DropdownButton<String>(
+            //       hint: Text("Select Category"),
+            //       value: 'Technology',
+            //       isExpanded: true,
+            //       onChanged: (newValue) {
+            //         setState(() {
+            //           // _selectedCategory = newValue!;
+            //         });
+            //       },
+            //       items: [
+            //         'Technology',
+            //         'Business',
+            //         'Entertainment',
+            //         'Health',
+            //         'Science',
+            //         'Sports'
+            //       ].map<DropdownMenuItem<String>>((String value) {
+            //         return DropdownMenuItem<String>(
+            //           value: value,
+            //           child: Text(value),
+            //         );
+            //       }).toList(),
+            //     ),
+            //   ),
+            // ),
+            TextField(
+              cursorColor: violet,
+              style: const TextStyle(color: violet, fontSize: 16),
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: violet.withOpacity(1)),
+                ),
+                hintText: 'Enter the price',
+                hintStyle:
+                    TextStyle(color: violet.withOpacity(0.6), fontSize: 16),
+              ),
+              controller: _eventNameController,
+            ),
+            const SizedBox(height: 24),
 
-                /// Color selection raw.
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ...List.generate(
-                        eventColors.length,
-                        (index) => GestureDetector(
-                          onTap: () {
-                            _selectColor(index);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              foregroundDecoration: BoxDecoration(
-                                border: index == _selectedColorIndex
-                                    ? Border.all(
-                                        color: Colors.black.withOpacity(0.3),
-                                        width: 2)
-                                    : null,
-                                shape: BoxShape.circle,
-                                color: eventColors[index],
-                              ),
-                              width: 32,
-                              height: 32,
-                            ),
+            /// Color selection section.
+            const Text(
+              'Select event color',
+              style: TextStyle(
+                fontSize: 16,
+                color: violet,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 14),
+
+            /// Color selection raw.
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ...List.generate(
+                    eventColors.length,
+                    (index) => GestureDetector(
+                      onTap: () {
+                        _selectColor(index);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Container(
+                          foregroundDecoration: BoxDecoration(
+                            border: index == _selectedColorIndex
+                                ? Border.all(
+                                    color: Colors.black.withOpacity(0.3),
+                                    width: 2)
+                                : null,
+                            shape: BoxShape.circle,
+                            color: eventColors[index],
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                /// Date selection button.
-                TextButton(
-                  onPressed: _showRangePicker,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.calendar_today_outlined,
-                        color: violet,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        _rangeButtonText,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: violet,
-                          fontWeight: FontWeight.w500,
+                          width: 32,
+                          height: 32,
                         ),
                       ),
-                    ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            /// Date selection button.
+            TextButton(
+              onPressed: _showRangePicker,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today_outlined,
+                    color: violet,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    _rangeButtonText,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: violet,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                /// Cancel button.
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('CANCEL'),
                   ),
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    /// Cancel button.
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('CANCEL'),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
+                const SizedBox(width: 16),
 
-                    /// OK button.
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed:
-                            _validateEventData() ? _onEventCreation : null,
-                        child: const Text('OK'),
-                      ),
-                    ),
-                  ],
+                /// OK button.
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _validateEventData() ? _onEventCreation : null,
+                    child: const Text('OK'),
+                  ),
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

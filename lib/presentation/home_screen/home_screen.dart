@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                 // height: screenHeight,
                 // child: myCustomCalendarPicker(),
                 ),
-            Container(height: screenHeight, child: CalendarPage()),
+            Container(height: screenHeight * 0.75, child: CalendarPage()),
           ],
         ),
       ),

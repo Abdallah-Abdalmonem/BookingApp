@@ -42,16 +42,13 @@ class _CalendarPageState extends State<CalendarPage> {
           builder: (ctx, value, child) => Text(value),
         ),
         actions: [
+          IconButton(icon: const Icon(Icons.add), onPressed: _addEvent),
           IconButton(
             tooltip: 'Go to current date',
             icon: const Icon(Icons.calendar_today),
             onPressed: _showCurrentMonth,
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addEvent,
-        child: const Icon(Icons.add),
       ),
       body: Column(
         children: [
@@ -130,8 +127,12 @@ class _CalendarPageState extends State<CalendarPage> {
 
   /// Show [CreateEventDialog] with settings for new event.
   Future<void> _addEvent() async {
-    final event = await showDialog(
-        context: context, builder: (context) => const CreateEventDialog());
+    final event = await showModalBottomSheet<CalendarEventModel>(
+      context: context,
+      builder: (context) => const CreateEventBottomSheet(),
+      isScrollControlled:
+          true, // Make the bottom sheet take full screen height if needed
+    );
     if (event != null) {
       _calendarController.addEvent(event);
     }
