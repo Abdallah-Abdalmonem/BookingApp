@@ -1,5 +1,4 @@
-import 'package:booking_app/features/home_screen/views/screens/home_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:booking_app/core/app_export.dart';
 
 void main() {
   runApp(const MyApp());
